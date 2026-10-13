@@ -1,13 +1,13 @@
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = (
+  import.meta.env.VITE_API_URL ||
+  "https://careeros-xyb2.onrender.com"
+).replace(/\/+$/, "") + "/api";
 
 // ==========================================
 // API REQUEST HELPER
 // ==========================================
 
-const apiRequest = async (
-  endpoint,
-  options = {}
-) => {
+const apiRequest = async (endpoint, options = {}) => {
   const token = localStorage.getItem("careeros_token");
 
   const headers = {
@@ -27,11 +27,19 @@ const apiRequest = async (
     }
   );
 
-  const data = await response.json();
+  const contentType = response.headers.get("content-type");
+  let data = {};
+
+  if (contentType && contentType.includes("application/json")) {
+    data = await response.json();
+  } else {
+    const message = await response.text();
+    data = { message };
+  }
 
   if (!response.ok) {
     throw new Error(
-      data.message || "Something went wrong."
+      data.message || `Request failed with status ${response.status}`
     );
   }
 
@@ -71,10 +79,7 @@ export const createApplication = (application) => {
   });
 };
 
-export const updateApplication = (
-  id,
-  application
-) => {
+export const updateApplication = (id, application) => {
   return apiRequest(`/applications/${id}`, {
     method: "PUT",
     body: JSON.stringify(application),
@@ -130,10 +135,7 @@ export const createLearning = (learning) => {
   });
 };
 
-export const updateLearning = (
-  id,
-  learning
-) => {
+export const updateLearning = (id, learning) => {
   return apiRequest(`/learning/${id}`, {
     method: "PUT",
     body: JSON.stringify(learning),
