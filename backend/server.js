@@ -25,11 +25,15 @@ connectDB();
 // MIDDLEWARE
 // ==========================================
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-  })
-);
+
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://career-os-one-rose.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 app.use(express.json());
 
