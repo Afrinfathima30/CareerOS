@@ -1,7 +1,9 @@
+
 const API_BASE_URL = (
   import.meta.env.VITE_API_URL ||
   "https://careeros-xyb2.onrender.com"
 ).replace(/\/+$/, "") + "/api";
+
 
 // ==========================================
 // API REQUEST HELPER
