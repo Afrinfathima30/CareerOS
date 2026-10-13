@@ -8,7 +8,7 @@ import {
 import {
   loginUser,
   registerUser,
-} from "../api/api";
+} from "../src/api/api";
 
 const AuthContext = createContext(null);
 

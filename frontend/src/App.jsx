@@ -1,3 +1,4 @@
+import Register from "./pages/Register";
 import { BrowserRouter, Navigate, Route, Routes, Link } from "react-router-dom";
 
 import { useAuth } from "./context/AuthContext";
@@ -515,6 +516,8 @@ function App() {
           path="/login"
           element={<Login />}
         />
+
+        <Route path="/register" element={<Register />} />
 
         {/* PROTECTED APPLICATION */}
 
